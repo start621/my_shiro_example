@@ -69,42 +69,7 @@ public class BarrageServerHandler implements ServerAioHandler<BarrageSessionCont
 			return WebsocketEncoder.encode(packet, groupContext, channelContext);
 		}
 
-		byte[] body = packet.getBody();
-		int bodyLen = 0;
-		boolean isCompress = false;
-		if (body != null) {
-			bodyLen = body.length;
-
-			if (bodyLen > 200) {
-				try {
-					byte[] gzipedbody = GzipUtils.gZip(body);
-					if (gzipedbody.length < body.length) {
-						Logger.getLogger(getClass()).error("压缩前:{}, " + body.length + "压缩后:{}" + gzipedbody.length);
-						body = gzipedbody;
-						packet.setBody(gzipedbody);
-						bodyLen = gzipedbody.length;
-						isCompress = true;
-					}
-				} catch (IOException e) {
-					Logger.getLogger(getClass()).error(e.getMessage(), e);
-				}
-			}
-		}
-
-		int allLen = BarragePacket.LEAST_HEADER_LENGHT + bodyLen;
-
-		ByteBuffer buffer = ByteBuffer.allocate(allLen);
-		buffer.order(groupContext.getByteOrder());
-
-		buffer.put(BarragePacket.VERSION);
-		buffer.put((byte) packet.getType());
-		buffer.put(isCompress ? (byte) 1 : (byte) 0);
-		buffer.putInt(packet.getSynSeq());
-		buffer.putShort((short) bodyLen);
-
-		if (body != null) {
-			buffer.put(body);
-		}
+		ByteBuffer buffer = ByteBuffer.allocate(1);
 		return buffer;
 	}
 

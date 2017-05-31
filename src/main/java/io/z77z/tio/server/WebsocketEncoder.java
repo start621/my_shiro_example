@@ -2,7 +2,6 @@ package io.z77z.tio.server;
 
 import io.z77z.tio.server.WebsocketPacket.Opcode;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 
 import org.slf4j.Logger;
@@ -18,15 +17,6 @@ import org.tio.core.GroupContext;
  */
 public class WebsocketEncoder
 {
-	@SuppressWarnings("unused")
-	private static Logger log = LoggerFactory.getLogger(WebsocketEncoder.class);
-
-	/**
-	 * 
-	 * @author: tanyaowu
-	 * 2017年2月22日 下午4:06:42
-	 * 
-	 */
 	public WebsocketEncoder()
 	{
 
@@ -75,15 +65,16 @@ public class WebsocketEncoder
 		if (imBody != null)
 		{
 			buf.put(imBody);
-		}
+		}/*
 		try {
 			System.out.println(new String(websocketHeader,"utf-8"));
 			System.out.println(barragePacket);
 			System.out.println(new String(imBody,"utf-8"));
+			System.out.println(buf);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		return buf;
 	}
 
@@ -113,18 +104,6 @@ public class WebsocketEncoder
 		{
 			throw new IllegalArgumentException("invalidate length " + bytes.length);
 		}
-	}
-
-	/**
-	 * @param args
-	 *
-	 * @author: tanyaowu
-	 * 2017年2月22日 下午4:06:42
-	 * 
-	 */
-	public static void main(String[] args)
-	{
-
 	}
 
 }

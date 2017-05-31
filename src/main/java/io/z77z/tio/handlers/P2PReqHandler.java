@@ -1,6 +1,7 @@
 package io.z77z.tio.handlers;
 
 import java.nio.ByteBuffer;
+import java.util.Date;
 
 import org.tio.core.Aio;
 import org.tio.core.ChannelContext;
@@ -21,7 +22,7 @@ public class P2PReqHandler implements BarrageHandlerIntf<P2PReqBody>{
 			ChannelContext<BarrageSessionContext, BarragePacket, Object> channelContext)
 			throws Exception {
 		System.out.println(jsonStr);
-		BarragePacket barragePacket = new BarragePacket("kasjhdSLODJCLSKD螺丝钉解放".getBytes(BarragePacket.CHARSET));
+		BarragePacket barragePacket = new BarragePacket((new Date().toString()+jsonStr).getBytes(BarragePacket.CHARSET));
 		Aio.send(channelContext, barragePacket);
 		return null;
 	}

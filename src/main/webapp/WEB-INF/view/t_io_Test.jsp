@@ -1,70 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ path;
-%>
 <!DOCTYPE html>
 <html>
 <head>
+<title>Testing websockets</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type="text/javascript"
-	src="<%=basePath%>/static/js/jquery-1.11.3.js"></script>
-<script type="text/javascript"
-	src="<%=basePath%>/static/js/t_io/bytebuffer-min.js"></script>
-<script type="text/javascript"
-	src="<%=basePath%>/static/js/t_io/protobuf-min.js"></script>
-<script type="text/javascript"
-	src="<%=basePath%>/static/js/t_io/talen.js"></script>
-<script type="text/javascript" src="<%=basePath%>/static/js/t_io/im.js"></script>
-<script type="text/javascript"
-	src="<%=basePath%>/static/js/t_io/action.js"></script>
-
-<title>Insert title here</title>
 </head>
 <body>
-	<!--<input type='hidden' name='' id='server' value='t-io.org'/> 127.0.0.1 -->
-	<input type='hidden' name='' id='server' value='t-io.org' />
-	<input type='hidden' name='' id='port' value='9321'
-		style='width: 50px;' />
-	<input type='hidden' name='' id='group' value='g' style='' />
-	<input type='hidden' name='' id='count' value='1' style='' />
-	<!-- <input type='button' value='连接并进入群组' onclick='connectionBtnClicked();'> -->
+  <div>
+    <input type="submit" value="Start" onclick="start()" />
+  </div>
+  <div id="messages"></div>
+  <script type="text/javascript">
+    var webSocket = 
+      new WebSocket('ws://localhost:5678');
 
+    webSocket.onerror = function(event) {
+      onError(event)
+    };
 
-	<input type="button" onclick="send();" value="发送消息" />
+    webSocket.onopen = function(event) {
+      onOpen(event)
+    };
+
+    webSocket.onmessage = function(event) {
+      onMessage(event)
+    };
+
+    function onMessage(event) {
+		var blob = event.data;
+		var reader = new FileReader();
+		reader.readAsText(blob, 'utf-8');
+		reader.onload = function (e) {
+			document.getElementById('messages').innerHTML 
+			+= '<br />' + reader.result;
+		}
+    }
+
+    function onOpen(event) {
+      document.getElementById('messages').innerHTML 
+        = 'Connection established';
+    }
+
+    function onError(event) {
+      alert(event.data);
+    }
+
+    function start() {
+      webSocket.send('hellohellohellohellohellohellohellohellohe');
+    }
+	//window.setInterval("start()", 10);
+  </script>
 </body>
-<script type="text/javascript">
-	//创建一个Socket实例
-	var socket = new WebSocket('ws://localhost:5678');
-
-	// 打开Socket 
-	socket.onopen = function(event) {
-
-		// 发送一个初始化消息
-		socket.send('I am the client and I\'m listening!');
-
-		// 监听消息
-		socket.onmessage = function(event) {
-			console.log('Client received a message', event);
-		};
-
-		// 监听Socket的关闭
-		socket.onclose = function(event) {
-			console.log('Client notified socket has closed', event);
-		};
-
-		// 关闭Socket.... 
-		//socket.close() 
-	};
-
-	$("#updatePermission").click(function() {
-		socket.send("123")
-	});
-	function name() {
-		
-	}
-	
-</script>
 </html>
