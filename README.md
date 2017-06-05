@@ -37,6 +37,7 @@ stable_version分支是可以保证稳定跑起来的，本项目只做学习交
 - 密码采用用户名+密码采用DES加密方式入库。
 
 - 密码重试次数限制。
+
 6.即时通讯框架T-io之WebSocket协议再之HelloWorld，服务端启动方法是src\main\java\io\z77z\tio\server下的BarrageServerStarter.java，
 客户端是src\main\webapp\WEB-INF\view下的t_io_Test.html。
 
