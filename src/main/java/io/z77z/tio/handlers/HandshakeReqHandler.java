@@ -1,22 +1,15 @@
 package io.z77z.tio.handlers;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import io.z77z.tio.body.HandshakeBody;
+import io.z77z.tio.server.*;
+import io.z77z.util.BASE64Util;
+import io.z77z.util.SHA1Util;
 import org.apache.commons.lang3.StringUtils;
 import org.tio.core.Aio;
 import org.tio.core.ChannelContext;
 
-import io.z77z.tio.body.HandshakeBody;
-import io.z77z.tio.server.BarrageHandlerIntf;
-import io.z77z.tio.server.BarragePacket;
-import io.z77z.tio.server.BarrageSessionContext;
-import io.z77z.tio.server.HttpRequestPacket;
-import io.z77z.tio.server.HttpResponsePacket;
-import io.z77z.tio.server.HttpResponseStatus;
-import io.z77z.tio.server.Type;
-import io.z77z.util.BASE64Util;
-import io.z77z.util.SHA1Util;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HandshakeReqHandler implements BarrageHandlerIntf<HandshakeBody> {
 
@@ -67,7 +60,7 @@ public class HandshakeReqHandler implements BarrageHandlerIntf<HandshakeBody> {
 			HttpResponseStatus httpResponseStatus = HttpResponseStatus.C101;
 			httpResponsePacket.setHttpResponseStatus(httpResponseStatus);
 
-			Map<String, String> respHeaders = new HashMap<>();
+			Map<String, String> respHeaders = new HashMap<String, String>();
 			respHeaders.put("Connection", "Upgrade");
 			respHeaders.put("Upgrade", "WebSocket");
 			respHeaders.put("Sec-WebSocket-Accept", acceptKey);

@@ -1,9 +1,14 @@
-﻿package io.z77z.test;
+package io.z77z.test;
 
-import java.util.List;
-
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import io.z77z.Application;
+import io.z77z.entity.*;
+import io.z77z.service.BeautifulPicturesService;
+import io.z77z.service.PictureService;
+import io.z77z.service.SysPermissionInitService;
+import io.z77z.service.SysUserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,39 +16,23 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import io.z77z.Application;
-import io.z77z.entity.BeautifulPictures;
-import io.z77z.entity.CustomPage;
-import io.z77z.entity.FrontPage;
-import io.z77z.entity.Picture;
-import io.z77z.entity.SysPermissionInit;
-import io.z77z.entity.SysUser;
-import io.z77z.service.BeautifulPicturesService;
-import io.z77z.service.PictureService;
-import io.z77z.service.SysPermissionInitService;
-import io.z77z.service.SysUserService;
-
-import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.enums.FieldStrategy;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
+import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)   //1.
 @SpringBootTest(classes = Application.class, webEnvironment=WebEnvironment.RANDOM_PORT )   // 2.SpringBoot入口类,配置起server随机端口
 public class MybatisPlusTest {
-    
+
     @Autowired
     BeautifulPicturesService beautifulPicturesService;
-    
+
     @Autowired
     PictureService pictureService;
-    
+
     @Autowired
 	SysPermissionInitService sysPermissionInitService;
-    
+
     @Autowired
     SysUserService sysUserService;
-    
+
     //分页测试
     @Test
     public void pageTest(){
@@ -60,7 +49,7 @@ public class MybatisPlusTest {
 		CustomPage<BeautifulPictures> customPage1 = new CustomPage<BeautifulPictures>(pageList);
 		System.out.println(JSON.toJSONString(customPage1));
     }
-    
+
     //公共字段自动填充
     //1.在mybatisplus的配置文件中公共字段生成类的bean
     //2.实现IMetaObjectHandler类
@@ -74,14 +63,14 @@ public class MybatisPlusTest {
     	user.setStatus("1");
     	sysUserService.insert(user);
     	sysUserService.selectById(user.getId());
-    	
+
     	SysUser user1 = new SysUser();
     	user1.setPswd("123");
     	user1.setId(user.getId());
     	sysUserService.updateById(user1);
     	sysUserService.selectById(user.getId());
     }
-    
+
     @Test
     public void wrapperTest(){
     	EntityWrapper<SysPermissionInit> wrapper =new EntityWrapper<SysPermissionInit>();

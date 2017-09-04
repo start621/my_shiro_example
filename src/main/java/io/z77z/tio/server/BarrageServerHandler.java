@@ -3,23 +3,19 @@ package io.z77z.tio.server;
 import io.z77z.tio.handlers.HandshakeReqHandler;
 import io.z77z.tio.handlers.P2PReqHandler;
 import io.z77z.tio.server.WebsocketPacket.Opcode;
-import io.z77z.util.GzipUtils;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.tio.core.ChannelContext;
 import org.tio.core.GroupContext;
 import org.tio.core.exception.AioDecodeException;
 import org.tio.server.intf.ServerAioHandler;
 
+import java.nio.ByteBuffer;
+import java.util.HashMap;
+import java.util.Map;
+
 public class BarrageServerHandler implements ServerAioHandler<BarrageSessionContext, BarragePacket, Object> {
 
-	private static Map<Byte, BarrageHandlerIntf<?>> handlerMap = new HashMap<>();
+	private static Map<Byte, BarrageHandlerIntf<?>> handlerMap = new HashMap<Byte, BarrageHandlerIntf<?>>();
 	static {
 		handlerMap.put(Type.COMMAND_HANDSHAKE_REQ, new HandshakeReqHandler());
 		handlerMap.put(Type.P2P_REQ, new P2PReqHandler());

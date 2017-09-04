@@ -1,11 +1,11 @@
 package io.z77z.tio.server;
 
-import java.io.IOException;
-
 import org.tio.server.AioServer;
 import org.tio.server.ServerGroupContext;
 import org.tio.server.intf.ServerAioHandler;
 import org.tio.server.intf.ServerAioListener;
+
+import java.io.IOException;
 
 
 public class BarrageServerStarter {
@@ -16,10 +16,10 @@ public class BarrageServerStarter {
 		public static ServerAioListener<BarrageSessionContext, BarragePacket, Object> aioListener = new BarrageServerAioListener();
 		
 		//一组连接共用的上下文对象
-		public static ServerGroupContext<BarrageSessionContext, BarragePacket, Object> serverGroupContext = new ServerGroupContext<>(aioHandler, aioListener);
+		public static ServerGroupContext<BarrageSessionContext, BarragePacket, Object> serverGroupContext = new ServerGroupContext<BarrageSessionContext, BarragePacket, Object>(aioHandler, aioListener);
 		
 		//aioServer对象
-		public static AioServer<BarrageSessionContext, BarragePacket, Object> aioServer = new AioServer<>(serverGroupContext);
+		public static AioServer<BarrageSessionContext, BarragePacket, Object> aioServer = new AioServer<BarrageSessionContext, BarragePacket, Object>(serverGroupContext);
 		
 		//有时候需要绑定ip，不需要则null
 		public static String serverIp = null;

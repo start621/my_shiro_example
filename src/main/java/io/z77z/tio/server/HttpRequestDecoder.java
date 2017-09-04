@@ -1,13 +1,12 @@
 package io.z77z.tio.server;
 
 import io.z77z.tio.server.HttpRequestPacket.RequestLine;
+import org.apache.commons.lang3.StringUtils;
+import org.tio.core.exception.AioDecodeException;
 
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-import org.tio.core.exception.AioDecodeException;
 
 /**
  * 
@@ -37,7 +36,7 @@ public class HttpRequestDecoder
 		int count = 0;
 		Step step = Step.firstline;
 		StringBuilder currLine = new StringBuilder();
-		Map<String, String> headers = new HashMap<>();
+		Map<String, String> headers = new HashMap<String, String>();
 		int contentLength = 0;
 		byte[] httpRequestBody = null;
 		RequestLine firstLine = null;

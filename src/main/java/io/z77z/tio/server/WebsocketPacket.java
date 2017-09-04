@@ -33,7 +33,7 @@ public class WebsocketPacket extends BarragePacket
 			this.code = code;
 		}
 
-		private static final Map<Byte, Opcode> map = new HashMap<>();
+		private static final Map<Byte, Opcode> map = new HashMap<Byte, Opcode>();
 		static
 		{
 			for (Opcode command : values())
